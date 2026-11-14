@@ -4,3 +4,5 @@ dist
 
 # Recorded device captures (contain device names and firmware strings)
 fixtures/
+
+coverage
