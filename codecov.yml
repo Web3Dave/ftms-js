@@ -1,0 +1,22 @@
+# https://docs.codecov.com/docs/codecov-yaml
+coverage:
+  status:
+    project:
+      default:
+        # Fail only if overall coverage drops by more than 1% against the base commit.
+        target: auto
+        threshold: 1%
+    patch:
+      default:
+        target: auto
+        threshold: 5%
+
+comment:
+  layout: 'condensed_header, diff, files'
+  require_changes: true
+
+ignore:
+  - 'tests/**'
+  - 'examples/**'
+  - 'scripts/**'
+  - 'fixtures/**'
