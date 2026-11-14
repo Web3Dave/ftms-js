@@ -1,0 +1,7 @@
+# Lets this folder work as a standalone repo (demo links to the library via workspace:*).
+packages:
+  - .
+  - examples/*
+
+allowBuilds:
+  esbuild: true

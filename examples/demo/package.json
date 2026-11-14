@@ -1,0 +1,21 @@
+{
+  "name": "ftms-js-demo",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 0.0.0.0",
+    "build": "tsc && vite build",
+    "capture": "node scripts/capture.mjs",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "ftms-js": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/web-bluetooth": "^0.0.20",
+    "typescript": "~5.6.3",
+    "vite": "^5.4.11",
+    "vitest": "^2.1.8",
+    "jsdom": "^25.0.1"
+  }
+}

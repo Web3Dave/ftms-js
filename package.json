@@ -1,0 +1,83 @@
+{
+  "name": "ftms-js",
+  "version": "0.1.0",
+  "description": "Browser-first TypeScript client for Bluetooth FTMS (Fitness Machine Service) fitness machines: treadmills, bikes, rowers, cross trainers and climbers.",
+  "type": "module",
+  "packageManager": "pnpm@12.18.0",
+  "license": "MIT",
+  "author": "Web3Dave",
+  "sideEffects": false,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Web3Dave/ftms-js.git"
+  },
+  "homepage": "https://web3dave.github.io/ftms-js/",
+  "bugs": {
+    "url": "https://github.com/Web3Dave/ftms-js/issues"
+  },
+  "keywords": [
+    "ftms",
+    "bluetooth",
+    "web-bluetooth",
+    "fitness",
+    "treadmill",
+    "rower",
+    "indoor-bike",
+    "cross-trainer",
+    "gatt",
+    "fitness-machine-service",
+    "typescript"
+  ],
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./testing": {
+      "types": "./dist/testing.d.ts",
+      "import": "./dist/testing.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "typecheck": "tsc",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "check": "pnpm typecheck && pnpm lint && pnpm test && pnpm format:check",
+    "prepublishOnly": "pnpm check && pnpm build"
+  },
+  "peerDependencies": {
+    "@types/web-bluetooth": ">=0.0.20"
+  },
+  "peerDependenciesMeta": {
+    "@types/web-bluetooth": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.17.0",
+    "@types/node": "^22.10.2",
+    "@types/web-bluetooth": "^0.0.20",
+    "esbuild": "^0.27.7",
+    "eslint": "^9.17.0",
+    "prettier": "^3.4.2",
+    "tsup": "^8.3.5",
+    "typescript": "~5.6.3",
+    "typescript-eslint": "^8.18.2",
+    "vitest": "^2.1.8"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  }
+}

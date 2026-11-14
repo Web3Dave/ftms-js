@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ftms-js demo</title>
+    <link rel="stylesheet" href="/src/style.css" />
+  </head>
+  <body>
+    <main>
+      <h1>ftms-js demo</h1>
+      <p id="support" class="note" hidden></p>
+
+      <section class="row">
+        <button id="connect" class="primary">Connect</button>
+        <button id="disconnect" disabled>Disconnect</button>
+        <span id="state" class="note">Not connected</span>
+      </section>
+
+      <section class="row simulator">
+        <span class="note">No hardware? Simulate a machine:</span>
+        <select id="machine" aria-label="Machine to simulate"></select>
+        <button id="simulate">Use simulator</button>
+      </section>
+
+      <section id="readout" class="readout"></section>
+
+      <details id="caps" class="caps" open hidden>
+        <summary>Machine capabilities</summary>
+        <div id="capsBody"></div>
+      </details>
+
+      <section class="row">
+        <button id="start" disabled>Start</button>
+        <button id="pause" disabled>Pause</button>
+        <button id="stop" disabled>Stop</button>
+        <span id="runState" class="badge unknown" hidden></span>
+      </section>
+
+      <section id="adjust" class="adjust"></section>
+      <p id="message" class="note"></p>
+
+      <section>
+        <div class="row">
+          <h2>Log</h2>
+          <button id="export" disabled>Export capture</button>
+          <button id="clear">Clear</button>
+        </div>
+        <pre id="log"></pre>
+      </section>
+    </main>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

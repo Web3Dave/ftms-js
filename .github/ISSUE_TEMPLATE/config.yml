@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Try the demo
+    url: https://web3dave.github.io/ftms-js/
+    about: Connect a machine in the browser and export a capture to attach to a report.

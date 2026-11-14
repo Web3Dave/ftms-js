@@ -1,0 +1,28 @@
+name: Bug report
+description: Something in the library behaves wrongly.
+labels: [bug]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened, and what did you expect?
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: Minimal code to reproduce
+      render: ts
+    validations:
+      required: false
+  - type: textarea
+    id: capture
+    attributes:
+      label: Capture (if a real machine is involved)
+      description: Connect in the [demo](https://web3dave.github.io/ftms-js/), press **Export capture**, and drag the JSON file here. It contains the device name and firmware strings.
+  - type: input
+    id: versions
+    attributes:
+      label: ftms-js version, browser and OS
+    validations:
+      required: true

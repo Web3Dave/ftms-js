@@ -1,0 +1,56 @@
+name: Device report
+description: Tell us how ftms-js works (or doesn't) with your fitness machine.
+title: 'Device: <brand and model>'
+labels: [device]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for testing a machine. Reports like this are how the compatibility table grows.
+        The fastest way to give us everything we need is the **capture** from the [demo](https://web3dave.github.io/ftms-js/).
+  - type: input
+    id: device
+    attributes:
+      label: Machine
+      description: Brand, model and type (treadmill, bike, rower, ...).
+      placeholder: Acme Runner 3000, treadmill
+    validations:
+      required: true
+  - type: dropdown
+    id: result
+    attributes:
+      label: Overall result
+      options:
+        - Works fine
+        - Works, with problems
+        - Connects but data or controls fail
+        - Does not connect
+    validations:
+      required: true
+  - type: textarea
+    id: details
+    attributes:
+      label: What worked and what didn't
+      description: Connect, live data, start/stop/pause, speed, incline, resistance, ...
+    validations:
+      required: true
+  - type: textarea
+    id: capture
+    attributes:
+      label: Capture
+      description: |
+        Only if relevant (anything other than "works fine"):
+        1. Open the [demo](https://web3dave.github.io/ftms-js/) in Chrome or Edge and connect your machine.
+        2. Try the controls that matter, then press **Export capture**.
+        3. Drag the saved JSON file here, or paste the log.
+
+        The capture contains the device name and firmware strings. Remove anything you don't want public.
+    validations:
+      required: false
+  - type: input
+    id: environment
+    attributes:
+      label: Browser and OS
+      placeholder: Chrome 130 on Android 15
+    validations:
+      required: true
