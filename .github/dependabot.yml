@@ -6,7 +6,17 @@ updates:
     schedule:
       interval: weekly
     open-pull-requests-limit: 5
+    # Keep @types/node at the oldest Node version we support (CI runs 22).
+    ignore:
+      - dependency-name: '@types/node'
+        update-types: ['version-update:semver-major']
+    # Groups are matched in order: eslint and vitest packages must move together,
+    # so they come before the catch-all groups.
     groups:
+      eslint:
+        patterns: ['eslint', '@eslint/js']
+      vitest:
+        patterns: ['vitest', '@vitest/*']
       dev-dependencies:
         dependency-type: development
         update-types: [minor, patch]
