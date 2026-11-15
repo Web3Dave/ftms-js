@@ -1,6 +1,6 @@
 {
   "name": "ftms-js",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Browser-first TypeScript client for Bluetooth FTMS (Fitness Machine Service) fitness machines: treadmills, bikes, rowers, cross trainers and climbers.",
   "type": "module",
   "packageManager": "pnpm@12.18.0",
