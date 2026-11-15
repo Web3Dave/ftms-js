@@ -12,7 +12,7 @@
     "ftms-js": "workspace:*"
   },
   "devDependencies": {
-    "@types/web-bluetooth": "^0.0.20",
+    "@types/web-bluetooth": "^0.0.22",
     "typescript": "~5.6.3",
     "vite": "^5.4.11",
     "vitest": "^2.1.8",
