@@ -1,7 +1,9 @@
 name: Release
 
 # Manual release: Actions tab -> Release -> Run workflow (on main).
-# Bumps the version, stages it on npm, then pushes the version commit, the tag and a GitHub release.
+# Publishes the version already in package.json on main, so bump it first in a normal PR
+# (`npm version <patch|minor|major> --no-git-tag-version`). main is protected, so this workflow never pushes
+# commits to it: it stages the version on npm, then pushes the tag and creates a GitHub release.
 #
 # Auth is npm trusted publishing (OIDC): no npm token is stored. The trusted publisher on npmjs.com must be
 # limited to staged publishing. The staged version is NOT public until a maintainer approves it with 2FA
@@ -9,15 +11,9 @@ name: Release
 
 on:
   workflow_dispatch:
-    inputs:
-      bump:
-        description: Version bump ("current" publishes the version already in package.json)
-        type: choice
-        options: [current, patch, minor, major]
-        default: patch
 
 permissions:
-  contents: write # push the version commit and tag, create the release
+  contents: write # push the tag, create the release
   id-token: write # npm provenance (and trusted publishing later)
 
 jobs:
@@ -37,28 +33,23 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - run: pnpm check
 
-      - name: Bump version
-        env:
-          BUMP: ${{ inputs.bump }}
+      - name: Read version and tag
         run: |
-          [ "$BUMP" = "current" ] || npm version "$BUMP" --no-git-tag-version
           VERSION=$(node -p "require('./package.json').version")
           echo "VERSION=$VERSION" >> "$GITHUB_ENV"
           if git ls-remote --exit-code --tags origin "refs/tags/v$VERSION" >/dev/null; then
-            echo "Tag v$VERSION already exists. Choose a bump."; exit 1
+            echo "Tag v$VERSION already exists. Bump the version in package.json via a PR first."; exit 1
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add package.json
-          git diff --cached --quiet || git commit -m "v$VERSION"
           git tag "v$VERSION"
 
       - run: pnpm build
       - name: Stage on npm (needs maintainer approval)
         run: npm stage publish --provenance --access public
 
-      - name: Push version commit and tag
-        run: git push origin HEAD:main "v$VERSION"
+      - name: Push tag
+        run: git push origin "v$VERSION"
 
       - name: GitHub release
         env:
