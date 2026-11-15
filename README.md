@@ -12,7 +12,7 @@
   <a href="https://codecov.io/gh/Web3Dave/ftms-js"><img alt="coverage" src="https://codecov.io/gh/Web3Dave/ftms-js/graph/badge.svg"/></a>
   <a href="https://www.npmjs.com/package/ftms-js"><img alt="npm" src="https://img.shields.io/npm/v/ftms-js"/></a>
   <a href="https://github.com/Web3Dave/ftms-js/blob/main/LICENSE"><img alt="license" src="https://img.shields.io/badge/license-MIT-blue"/></a>
-  <a href="https://bundlephobia.com/package/ftms-js"><img alt="size" src="https://img.shields.io/bundlephobia/minzip/ftms-js"/></a>
+  <a href="https://bundlejs.com/?q=ftms-js"><img alt="size" src="https://img.shields.io/bundlejs/size/ftms-js"/></a>
 </p>
 
 Implements the Bluetooth SIG's [Fitness Machine Service (FTMS) specification](https://www.bluetooth.com/specifications/specs/fitness-machine-service-1-0/),
