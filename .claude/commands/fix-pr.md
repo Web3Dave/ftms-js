@@ -16,7 +16,8 @@ variables.
 2. Find the failure: `gh pr checks $PR`. For each failed check, get its run id from the link and read the log with
    `gh run view <id> --log-failed`. If no check failed (all passing or still running), stop and say so in the
    summary comment.
-3. Reproduce locally: `pnpm install --frozen-lockfile`, then run the failing step. CI runs `pnpm check`
+3. Reproduce locally: `pnpm install --frozen-lockfile` (if that itself fails, the lockfile is out of date: see
+   Boundaries), then run the failing step. CI runs `pnpm check`
    (typecheck, lint, test, format:check), `pnpm test:coverage` and `pnpm build`. Run the individual script that
    matches the failure first, for example `pnpm typecheck`.
 4. Find the root cause in the PR's diff (`gh pr diff $PR`) and fix it in source code with the smallest change that
@@ -28,9 +29,17 @@ variables.
 
 ## Boundaries
 
-- Never edit `.github/` (workflows, templates, the agent-dispatch file) or `pnpm-lock.yaml`.
-- Do not add, remove or change dependencies or their versions. If the failure comes from a dependency bump (for
-  example a Dependabot PR), fix the source code to match the new version; if that is impossible, stop (see below).
+- Never edit `.github/` (workflows, templates, the agent-dispatch file).
+- Dependency changes are allowed only when the failure requires them (for example a companion package that must
+  match a bumped package, such as `@vitest/coverage-v8` with `vitest`). Rules:
+  - Change only the packages the failure needs, and keep the PR's own bump: never revert or downgrade it.
+  - Use pnpm (`pnpm add -D <pkg>@<version>` or `pnpm update <pkg>@<version>`) so `pnpm-lock.yaml` is regenerated.
+    Never edit `pnpm-lock.yaml` by hand. Keep existing version-range style in `package.json`.
+  - Prefer the smallest change: first try source fixes, then a version alignment; add a brand-new package only if
+    nothing else works.
+  - Check that the chosen version exists and is compatible (`pnpm view <pkg> versions`, peer dependencies).
+  - Afterwards `pnpm install --frozen-lockfile` must succeed, to prove the lockfile is consistent.
+  - List every dependency change (package, old version, new version, reason) in the summary comment.
 - Do not make a check pass by weakening it: no deleting or skipping tests, no `eslint-disable` comments, no loosening
   `tsconfig.json`, eslint or vitest config, no lowering coverage thresholds.
 - Never force-push, never rewrite history, never push to any other branch.
@@ -41,7 +50,7 @@ variables.
 Stop without pushing, and explain why in the summary comment, if:
 
 - the failure is not reproducible locally, or is clearly flaky or an infrastructure/network problem;
-- the fix would need one of the forbidden changes above, or a design decision that belongs to the maintainer;
+- the fix would need a forbidden change above (including a dependency change beyond the rules), or a design decision that belongs to the maintainer;
 - you tried two different fixes and `pnpm check` still fails;
 - the PR is closed, or comes from a fork.
 

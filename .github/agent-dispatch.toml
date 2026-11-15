@@ -5,6 +5,10 @@ allow   = "write-branch"
 timeout = 20
 tools   = [
   "Bash(pnpm install:*)",
+  "Bash(pnpm add:*)",
+  "Bash(pnpm update:*)",
+  "Bash(pnpm view:*)",
+  "Bash(pnpm why:*)",
   "Bash(pnpm check:*)",
   "Bash(pnpm typecheck:*)",
   "Bash(pnpm lint:*)",
