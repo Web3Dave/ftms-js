@@ -1,0 +1,16 @@
+[playbooks.fix-pr]
+agent   = "claude"
+model   = "claude-sonnet-5-5"
+allow   = "write-branch"
+timeout = 20
+tools   = [
+  "Bash(pnpm install:*)",
+  "Bash(pnpm check:*)",
+  "Bash(pnpm typecheck:*)",
+  "Bash(pnpm lint:*)",
+  "Bash(pnpm test:*)",
+  "Bash(pnpm test:coverage:*)",
+  "Bash(pnpm format:*)",
+  "Bash(pnpm format:check:*)",
+  "Bash(pnpm build:*)",
+]
