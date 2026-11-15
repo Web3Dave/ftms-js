@@ -659,8 +659,8 @@ export class FtmsClient extends Emitter<FtmsEvents> {
     try {
       await withTimeout(
         typeof cp.writeValueWithResponse === 'function'
-          ? cp.writeValueWithResponse(bytes)
-          : cp.writeValue(bytes),
+          ? cp.writeValueWithResponse(bytes as BufferSource)
+          : cp.writeValue(bytes as BufferSource),
         this.#gattTimeoutMs,
         () => new FtmsError('TIMEOUT', 'Control point write timed out'),
       )
