@@ -1,10 +1,11 @@
 name: Release
 
 # Manual release: Actions tab -> Release -> Run workflow (on main).
-# Bumps the version, publishes to npm, then pushes the version commit, the tag and a GitHub release.
+# Bumps the version, stages it on npm, then pushes the version commit, the tag and a GitHub release.
 #
-# First publish uses the NPM_TOKEN secret. Once trusted publishing is linked on npmjs.com,
-# delete the `env: NODE_AUTH_TOKEN` lines below and npm will authenticate via OIDC instead.
+# Auth is npm trusted publishing (OIDC): no npm token is stored. The trusted publisher on npmjs.com must be
+# limited to staged publishing. The staged version is NOT public until a maintainer approves it with 2FA
+# (npmjs.com -> ftms-js -> Staged versions -> Approve, or `npm stage approve <stage-id>`).
 
 on:
   workflow_dispatch:
@@ -31,6 +32,8 @@ jobs:
           node-version: 24 # npm >= 11.5 is required for trusted publishing
           cache: pnpm
           registry-url: https://registry.npmjs.org
+      - name: Update npm (npm stage needs >= 11.15)
+        run: npm install -g npm@^11.15.0 && npm --version
       - run: pnpm install --frozen-lockfile
       - run: pnpm check
 
@@ -51,10 +54,8 @@ jobs:
           git tag "v$VERSION"
 
       - run: pnpm build
-      - name: Publish to npm
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: npm publish --provenance --access public
+      - name: Stage on npm (needs maintainer approval)
+        run: npm stage publish --provenance --access public
 
       - name: Push version commit and tag
         run: git push origin HEAD:main "v$VERSION"
